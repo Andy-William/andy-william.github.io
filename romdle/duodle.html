@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Duodle Helper</title>
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <h1>Duodle Helper</h1>
+
+  <label for="guesses">Enter your guesses (one per line):</label>
+  <br>
+  <textarea id="guesses" placeholder="E.g.&#10;LATER&#10;SONIC"></textarea>
+  <br>
+  <button id="loadBtn">Load</button>
+  <br>
+  <p id="colorHint" class="hint" style="display:none">Click a tile to cycle its color (Red → Yellow → Green)</p>
+  <div id="previewGrid" class="duo-preview" style="display:none">
+    <div>
+      <h3>Board 1</h3>
+      <div class="grid" id="grid1"></div>
+    </div>
+    <div>
+      <h3>Board 2</h3>
+      <div class="grid" id="grid2"></div>
+    </div>
+  </div>
+  
+  <button id="solveBtn" style="display:none">Solve</button>
+  
+  <div class="grid-container" id="answercontainer" style="display:none">
+    <a class="hint" style="flex: 100%">Click a word to add it to your guesses</a>
+    <div>
+      <h3>Possible Answers (Board 1)</h3>
+      <div class="grid" id="results1"></div>
+    </div>
+    <div>
+      <h3>Possible Answers (Board 2)</h3>
+      <div class="grid" id="results2"></div>
+    </div>
+    <div>
+      <h3>Suggestions (best first)</h3>
+      <div class="grid" id="suggestions"></div>
+    </div>
+  </div>
+  
+  
+  <script src="duodle.js"></script>
+</body>
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Romdle Helper</title>
+  <link href="style.css" rel="stylesheet">
+</head>
+<body>
+  <h1>Romdle Helper</h1>
+
+  <label for="guesses">Enter your guesses (one per line):</label>
+  <br>
+  <textarea id="guesses" placeholder="E.g.&#10;LATER&#10;SONIC"></textarea>
+  <br>
+  <button id="loadBtn">Load</button>
+  <br>
+  <p id="colorHint" class="hint" style="display:none">Click a tile to cycle its color (Red → Yellow → Green)</p>
+  <div class="grid" id="grid">
+  </div>
+  
+  <button id="solveBtn" style="display:none">Solve</button>
+  
+  <div class="grid-container" id="answercontainer" style="display:none">
+    <a class="hint" style="flex: 100%">Click a word to add it to your guesses</a>
+    <div>
+      <h3>Possible Answers</h3>
+      <div class="grid" id="results"></div>
+    </div>
+    <div>
+      <h3>Suggestions (best first)</h3>
+      <div class="grid" id="suggestions"></div>
+    </div>
+  </div>
+  
+  
+  <script src="romdle.js"></script>
+</body>
+</html>
