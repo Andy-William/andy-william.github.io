@@ -1,0 +1,26 @@
+body{
+  background-color: purple;
+}
+
+#title{
+  text-align: center;
+  font-size: 300%;
+  color: #FFF77E;
+  font-family: "Helvetica";
+}
+
+#score{
+  text-align: center;
+  font-size: 150%;
+  color: #FFD67E;
+  font-family: "Helvetica";
+}
+
+#game{
+  background-color: #FFD67E;
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin:auto;
+  border: 1px solid violet;
+}
