@@ -11,16 +11,16 @@
 
   <label for="guesses">Enter your guesses (one per line):</label>
   <br>
-  <textarea id="guesses" placeholder="E.g.&#10;LATER&#10;SONIC"></textarea>
+  <textarea id="guesses" placeholder="E.g.&#10;LATER&#10;SONIC" autofocus></textarea>
   <br>
   <button id="loadBtn">Load</button>
   <br>
   <p id="colorHint" class="hint" style="display:none">Click a tile to cycle its color (Red → Yellow → Green)</p>
   <div class="grid" id="grid">
   </div>
-  
+
   <button id="solveBtn" style="display:none">Solve</button>
-  
+
   <div class="grid-container" id="answercontainer" style="display:none">
     <a class="hint" style="flex: 100%">Click a word to add it to your guesses</a>
     <div>
@@ -32,8 +32,7 @@
       <div class="grid" id="suggestions"></div>
     </div>
   </div>
-  
-  
+
   <script src="romdle.js"></script>
 </body>
 </html>
