@@ -4,8 +4,8 @@ document.getElementById('loadBtn').addEventListener('click', renderGrid);
 document.getElementById('solveBtn').addEventListener('click', solveRomdle);
 
 const urlParams = new URLSearchParams(window.location.search);
-const preFilledWords = urlParams.get('words')
-const preFilledColors = urlParams.get('colors')
+const preFilledWords = urlParams.get('words') || ''
+const preFilledColors = urlParams.get('colors') || ''
 
 if( preFilledWords.length > 0 ){
   document.getElementById('guesses').value = preFilledWords.match(/.{1,5}/g).join("\n");
