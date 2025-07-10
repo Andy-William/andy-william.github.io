@@ -3,6 +3,28 @@ const COLORS = ['red', 'yellow', 'green'];
 document.getElementById('loadBtn').addEventListener('click', renderGrid);
 document.getElementById('solveBtn').addEventListener('click', solveRomdle);
 
+const urlParams = new URLSearchParams(window.location.search);
+const preFilledWords = urlParams.get('words')
+const preFilledColors = urlParams.get('colors')
+
+if( preFilledWords.length > 0 ){
+  document.getElementById('guesses').value = preFilledWords.match(/.{1,5}/g).join("\n");
+  renderGrid();
+  if( preFilledColors.length > 0 ){
+    let colors = Array.from(preFilledColors)
+    document.querySelectorAll('.row').forEach(row => {
+      row.querySelectorAll('.tile').forEach(tile => {
+        let color = colors.shift()
+        if( color ){
+          tile.dataset.colorIndex = color
+          COLORS.forEach(color => tile.classList.remove(color));
+          tile.classList.add(COLORS[color]);
+        }
+      })
+    });
+  }
+}
+
 function renderGrid() {
   const input = document.getElementById('guesses').value.trim().toUpperCase();
   const lines = input.replace(/[^a-zA-Z]+/g, '').match(/.{5}/g)?.filter(line => line.length === 5) || [];
@@ -80,7 +102,7 @@ function solveRomdle() {
   document.getElementById('answercontainer').style.display='flex';
   const resultsDiv = document.getElementById('results');
   const suggestionDiv = document.getElementById('suggestions');
-  
+
   solveBtn.disabled = true;
   solveBtn.textContent = "Solving...";
   resultsDiv.innerHTML = "<p>Loading...</p>";
@@ -119,7 +141,7 @@ async function realSolveRomdle() {
     colors.push(color)
   });
 
-   
+
   let mustHave = []
   if( colors.length>0 ){
     let idx = colors.length-1
@@ -135,8 +157,8 @@ async function realSolveRomdle() {
       word = word2
     }
     return true
-  }  
-  
+  }
+
   await Promise.all(init)
   let answers = romdletxt.filter(word => eligibleWord(word.trim())).map(word => word.trim().toUpperCase())
   let words = words5txt.filter(word => eligibleWord(word.trim())).map(word => word.trim().toUpperCase())
@@ -175,7 +197,7 @@ async function realSolveRomdle() {
     solutions = solutions.filter(word => wordleHash(letters[i], word) == colors[i])
     engSolutions = engSolutions.filter(word => wordleHash(letters[i], word) == colors[i])
   }
-  
+
   function calculate(solutions, guesses){
     let result = new Array(guesses.length)
     for( let i=0 ; i<guesses.length ; i++ ){
@@ -238,13 +260,13 @@ async function realSolveRomdle() {
   let ans3 = bestRomdleAnswer(solutions, words)
   ans3 = ans3.filter(a=>a.lt(globalMinValue))
   console.log(ans3.map(a=>a.toString()))
-  
+
   let sortedAns = ans3.map(a => a.word).concat(ans2.map(a => a.word)).concat(ans.map(a => a.word))
 
   let resultDiv = document.getElementById('results')
   fillWordList(resultDiv, solutions)
   fillWordList(document.getElementById('suggestions'), sortedAns)
-  
+
   const maybeDiv = document.createElement('div')
   const solset = new Set(solutions)
   maybeDiv.textContent = 'Other words that fit: ' + engSolutions.filter(w=>!solset.has(w)).join(", ")

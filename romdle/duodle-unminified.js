@@ -3,6 +3,29 @@ const COLORS = ['red', 'yellow', 'green'];
 document.getElementById('loadBtn').addEventListener('click', renderGrid);
 document.getElementById('solveBtn').addEventListener('click', solveDuodle);
 
+const urlParams = new URLSearchParams(window.location.search);
+const preFilledWords = urlParams.get('words')
+const preFilledColors = urlParams.get('colors')
+
+if( preFilledWords.length > 0 ){
+  document.getElementById('guesses').value = preFilledWords.match(/.{1,5}/g).join("\n");
+  renderGrid();
+  if( preFilledColors.length > 0 ){
+    let colors = Array.from(preFilledColors)
+    document.querySelectorAll('.row').forEach(row => {
+      console.log(row)
+      row.querySelectorAll('.tile').forEach(tile => {
+        let color = colors.shift()
+        if( color ){
+          tile.dataset.colorIndex = color
+          COLORS.forEach(color => tile.classList.remove(color));
+          tile.classList.add(COLORS[color]);
+        }
+      })
+    });
+  }
+}
+
 function renderGrid() {
   const input = document.getElementById('guesses').value.trim().toUpperCase();
   const lines = input.replace(/[^a-zA-Z]+/g, '').match(/.{5}/g)?.filter(line => line.length === 5) || [];
@@ -84,7 +107,7 @@ function solveDuodle() {
   const results1Div = document.getElementById('results1');
   const results2Div = document.getElementById('results2');
   const suggestionDiv = document.getElementById('suggestions');
-  
+
   solveBtn.disabled = true;
   solveBtn.textContent = "Solving...";
   results1Div.innerHTML = "<p>Loading...</p>";
@@ -186,7 +209,7 @@ async function realSolveDuodle() {
     solutions2 = solutions2.filter(word => wordleHash(letters2[i], word) == colors2[i])
     engSolutions2 = engSolutions2.filter(word => wordleHash(letters2[i], word) == colors2[i])
   }
-  
+
   function calculate(solutions, guesses){
     let result = new Array(guesses.length)
     for( let i=0 ; i<guesses.length ; i++ ){
@@ -203,7 +226,7 @@ async function realSolveDuodle() {
     return result
   }
 
-  
+
   class Answer {
     constructor(word, remaining1, remaining2, combination1, combination2){
       this.word = word // the word
@@ -275,13 +298,13 @@ async function realSolveDuodle() {
   fillWordList(result1Div, solutions1)
   fillWordList(result2Div, solutions2)
   fillWordList(document.getElementById('suggestions'), sortedAns)
-  
+
   const maybe1Div = document.createElement('div')
   const sol1set = new Set(solutions1)
   maybe1Div.textContent = 'Other words that fit: ' + engSolutions1.filter(w=>!sol1set.has(w)).join(", ")
   maybe1Div.classList.add('hint')
   result1Div.appendChild(maybe1Div)
-  
+
   const maybe2Div = document.createElement('div')
   const sol2set = new Set(solutions2)
   maybe2Div.textContent = 'Other words that fit: ' + engSolutions2.filter(w=>!sol2set.has(w)).join(", ")
