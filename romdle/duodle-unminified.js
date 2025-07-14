@@ -221,7 +221,7 @@ async function realSolveDuodle() {
         if( hash=="22222" ) counts[hash]--
         if( counts[hash] > result[i][1] ) result[i][1] = counts[hash]
       }
-      result[i][2] = Object.keys(counts).length
+      result[i][2] = Math.max(1, Object.keys(counts).length)
     }
     return result
   }
