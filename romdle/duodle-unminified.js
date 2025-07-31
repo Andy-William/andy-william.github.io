@@ -236,7 +236,7 @@ async function realSolveDuodle() {
       this.combination2 = Math.min(combination1, combination2) // possible color combination (lower  value)
     }
     static compare(a,b){
-      return a.remaining1-b.remaining1 || a.remaining2-b.remaining2 || (b.combination1*b.combination2-a.combination1*a.combination2)
+      return a.remaining2-b.remaining2 || a.remaining1-b.remaining1 || (b.combination1*b.combination2-a.combination1*a.combination2)
     }
     lte(a){
       return Answer.compare(this, a) <= 0
