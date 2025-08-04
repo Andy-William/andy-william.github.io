@@ -13,7 +13,6 @@ if( preFilledWords.length > 0 ){
   if( preFilledColors.length > 0 ){
     let colors = Array.from(preFilledColors)
     document.querySelectorAll('.row').forEach(row => {
-      console.log(row)
       row.querySelectorAll('.tile').forEach(tile => {
         let color = colors.shift()
         if( color ){
@@ -230,8 +229,8 @@ async function realSolveDuodle() {
   class Answer {
     constructor(word, remaining1, remaining2, combination1, combination2){
       this.word = word // the word
-      this.remaining1 = Math.max(remaining1, remaining2) // remaining possible answer (higher value)
-      this.remaining2 = Math.min(remaining1, remaining2) // remaining possible answer (lower value)
+      this.remaining1 = Math.max(1, remaining1, remaining2) // remaining possible answer (higher value)
+      this.remaining2 = Math.max(1, Math.min(remaining1, remaining2))// remaining possible answer (lower value)
       this.combination1 = Math.max(combination1, combination2) // possible color combination (higher value)
       this.combination2 = Math.min(combination1, combination2) // possible color combination (lower  value)
     }
