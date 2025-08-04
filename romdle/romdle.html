@@ -35,5 +35,85 @@
   </div>
 
   <script src="romdle.js"></script>
+
+<button onclick="pasteAndSplit()">Paste & Split Image</button>
+<br><br>
+<div id="output" style="display: flex; flex-wrap: wrap; gap: 4px;"></div>
+
+<canvas id="canvas" style="display: none;"></canvas>
+
+<script>
+  const rows = 6; // Change as needed
+  const cols = 5;
+
+  async function pasteAndSplit() {
+    try {
+      const url = await navigator.clipboard.readText();
+      if (!url || !url.startsWith("http")) {
+        alert("Clipboard doesn't contain a valid image URL.");
+        return;
+      }
+
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = function () {
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+
+        if( img.width != 520 || img.height != 702 ){
+          alert('Invalid image size')
+          return
+        }
+        canvas.width = img.width;
+        canvas.height = img.height;
+        ctx.drawImage(img, 0, 0);
+
+        const cellWidth = Math.floor(img.width / cols);
+        const cellHeight = Math.floor(img.height / rows);
+
+        const output = document.getElementById('output');
+        output.innerHTML = ''; // Clear previous
+
+        for (let y = 0; y < rows; y++) {
+          for (let x = 0; x < cols; x++) {
+            const croppedCanvas = document.createElement('canvas');
+            const croppedCtx = croppedCanvas.getContext('2d');
+            croppedCanvas.width = cellWidth;
+            croppedCanvas.height = cellHeight;
+
+            croppedCtx.drawImage(
+              canvas,
+              x * cellWidth,
+              y * cellHeight,
+              cellWidth,
+              cellHeight,
+              0,
+              0,
+              cellWidth,
+              cellHeight
+            );
+
+            const imgEl = new Image();
+            imgEl.src = croppedCanvas.toDataURL();
+            imgEl.style.border = "1px solid #ccc";
+            imgEl.width = 100; // Scale display size (optional)
+            imgEl.height = 100;
+
+            output.appendChild(imgEl);
+          }
+        }
+      };
+
+      img.onerror = function (err) {
+        alert('Failed to load image.');
+      };
+
+      img.src = url;
+    } catch (err) {
+      alert("Clipboard read failed: " + err.message);
+    }
+  }
+</script>
+
 </body>
 </html>
