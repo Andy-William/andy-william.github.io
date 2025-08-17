@@ -149,7 +149,6 @@ async function realSolveRomdle() {
       if( colors[idx][i]!="0" ) mustHave.push(letters[idx][i])
     }
   }
-  console.log("mashev",mustHave)
 
   await Promise.all(init)
   let answers = romdletxt.filter(word => eligibleWord(word.trim(), mustHave)).map(word => word.trim().toUpperCase())

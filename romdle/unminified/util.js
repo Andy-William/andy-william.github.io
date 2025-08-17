@@ -44,8 +44,9 @@ function calculate(solutions, guesses){
 
 function eligibleWord(word, mustHave){
   if( word == "" ) return false;
+  word = word.toUpperCase();
   for( let letter of mustHave ){
-    if( !word.includes(letter) ) return false;
+    if( !word.includes(letter.toUpperCase()) ) return false;
     // let word2 = word.replace(RegExp(letter, "i"), "")
     // if( word2 == word ) return false
     // word = word2
