@@ -26,6 +26,19 @@ textarea {
   overflow: hidden;
 }
 
+input {
+  width: 100%;
+  max-width: 100px;
+  height: 25px;
+  border: 1px solid #cccccc;
+  border-radius: 8px;
+  padding: 3px;
+  padding-left: 8px;
+  resize: none;
+  text-transform: uppercase;
+  font-size: 1.2rem
+}
+
 button {
   margin-top: 0.5rem;
   padding: 0.6rem 1rem;
@@ -55,6 +68,7 @@ button:disabled {
 .row {
   display: flex;
   gap: 0.5rem;
+  align-items: center;
 }
 
 .tile {
@@ -75,6 +89,7 @@ button:disabled {
 .green { background-color: #56894e; }   /* correct */
 .yellow { background-color: #bca121; }  /* misplaced */
 .red { background-color: #df3041; }    /* wrong */
+.gray { background-color: #AAAAAA; }    /* empty */
 
 
 .suggestion {
@@ -123,6 +138,13 @@ button:disabled {
   font-size: 0.9rem;
   color: #555555;
   font-style: italic;
+}
+
+.error {
+  font-size: 1rem;
+  color: #e23e3e;
+  font-style: italic;
+  line-height: 0px;
 }
 
 .duo-preview {
