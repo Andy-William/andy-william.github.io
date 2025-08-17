@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Evil Romdle</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1>Evil Romdle</h1>
+
+  <p class="hint">Type your guess and press Enter</p>
+  <div class="row" style="max-height: initial">
+    <input type="text" id="guessInput" maxlength="5" autocomplete="off">
+    <p id="errorSubmit" class="error"></p>
+  </div>
+
+  <div class="grid" id="board"></div>
+
+  <div>
+    <button id="resetBtn">Reset</button>
+  </div>
+
+  <script src="evil.js" type="module"></script>
+</body>
+</html>
