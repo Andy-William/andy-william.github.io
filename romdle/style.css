@@ -28,6 +28,7 @@ textarea {
 
 input {
   width: 100%;
+  min-width: 100px;
   max-width: 100px;
   height: 25px;
   border: 1px solid #cccccc;
@@ -145,6 +146,7 @@ button:disabled {
   color: #e23e3e;
   font-style: italic;
   line-height: 0px;
+  white-space: nowrap;
 }
 
 .duo-preview {
