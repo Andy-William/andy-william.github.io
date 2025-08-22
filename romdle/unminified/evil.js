@@ -5,6 +5,7 @@ const MAX_GUESSES = 6;
 let solutions = [];
 let currentGuess = 0;
 let gameOver = false;
+let sureLose = false;
 let mustHave = [];
 
 let romdletxt = [];
@@ -42,6 +43,7 @@ function initBoard() {
 async function startGame() {
   currentGuess = 0;
   gameOver = false;
+  sureLose = false;
   mustHave = [];
   guessInput.value = "";
   guessInput.focus();
@@ -70,11 +72,33 @@ function bestRomdleAnswer(words, allWords){
   return answers[0]
 }
 
+function isNewHarder(worstAnswer, newAnswer, worstRemainingWords, newRemainingWords, newMustHave){
+  if( sureLose ) return false;
+  if( currentGuess > 0 && newMustHave.length == 4 ){
+    if( newRemainingWords.every(w=>w.endsWith("OWER")) && newRemainingWords.filter(w=>w!="ROWER").length > MAX_GUESSES - currentGuess - 1){
+      sureLose = true;
+      return true;
+    }
+    if( newRemainingWords.every(w=>w.endsWith("OUND")) && newRemainingWords.length > MAX_GUESSES - currentGuess - 1 ){
+      sureLose = true;
+      return true;
+    }
+  }
+  if( newAnswer.remaining > worstAnswer.remaining ) return true;
+  if( newAnswer.remaining < worstAnswer.remaining ) return false;
+  if( newAnswer.remaining > 1 && currentGuess > 0 ){
+    if( newAnswer.combination < worstAnswer.combination ) return true;
+    if( newAnswer.combination > worstAnswer.combination ) return false;
+  }
+  return newRemainingWords.length > worstRemainingWords.length;
+}
+
 function findWorstHash(guess, words){
   let hashWords = {};
   let maxNeed = 0;
   let worstAnswer = new Answer("", -1, 0);
   let ans = "22222";
+  sureLose = false;
 
   for( let word of words ){
     let hash = wordleHash(guess, word)
@@ -86,16 +110,16 @@ function findWorstHash(guess, words){
     if( hashWords[hash].length < maxNeed ) continue;
     if( hash=="22222" ) continue;
 
-    let currentMustHave = []
+    let currentMustHave = [];
     for( let i in hash ){
-      if( hash[i]!="0" ) currentMustHave.push(guess[i])
+      if( hash[i]!="0" ) currentMustHave.push(guess[i]);
     }
 
     let words = words5txt.filter(word => eligibleWord(word.trim(), currentMustHave)).map(word => word.trim().toUpperCase())
 
-    let best = bestRomdleAnswer(hashWords[hash], words);
-    if( worstAnswer.remaining < best.remaining || (worstAnswer.remaining == best.remaining && hashWords[hash].length > hashWords[ans].length) ){
-      worstAnswer = best;
+    let currentWorst = bestRomdleAnswer(hashWords[hash], words);
+    if( isNewHarder(worstAnswer, currentWorst, hashWords[ans], hashWords[hash], currentMustHave) ){
+      worstAnswer = currentWorst;
       ans = hash;
       maxNeed = worstAnswer.remaining;
       mustHave = currentMustHave;
@@ -105,9 +129,9 @@ function findWorstHash(guess, words){
   // First answer was optimized to only check hard words. This speeds up calculation and make it harder to guess.
   // However we need to add all possible answer for next guesses
   if( currentGuess == 0 ){
-    solutions = romdletxt.filter(word => wordleHash(guess, word)==ans)
+    solutions = romdletxt.filter(word => wordleHash(guess, word)==ans);
   } else{
-    solutions = hashWords[ans]
+    solutions = hashWords[ans];
   }
   return ans;
 }
