@@ -83,6 +83,10 @@ function isNewHarder(worstAnswer, newAnswer, worstRemainingWords, newRemainingWo
       sureLose = true;
       return true;
     }
+    if( newRemainingWords.every(w=>w.endsWith("IDER")) && newRemainingWords.filter(w=>w!="RIDER").length > MAX_GUESSES - currentGuess - 1 ){
+      sureLose = true;
+      return true;
+    }
   }
   if( newAnswer.remaining > worstAnswer.remaining ) return true;
   if( newAnswer.remaining < worstAnswer.remaining ) return false;
