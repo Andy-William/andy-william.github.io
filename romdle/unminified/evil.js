@@ -176,7 +176,8 @@ function submitGuess(guess) {
 
   if( wh == "22222" ) {
     gameOver = true;
-    errorSubmit.textContent = "You win!";
+    if( currentGuess == MAX_GUESSES ) errorSubmit.textContent = "You win! But can you win in less guesses?";
+    else if( currentGuess < MAX_GUESSES ) errorSubmit.textContent = "You win! Congratulations!";
   } else if (currentGuess >= MAX_GUESSES) {
     gameOver = true;
     errorSubmit.textContent = `Game over! The word was ${solutions[0]}`;
