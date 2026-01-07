@@ -6,10 +6,10 @@ function diffMins(from, to){
   return Math.floor((to-from)/(1000*60))
 }
 
-  function getTimeZoneString(time = new Date){
-    const offset = time.getTimezoneOffset()
-    return "GMT" + (offset<=0?"+":"-") + Math.floor(Math.abs(offset)/60) + (offset%60?":"+Math.abs(offset)%60:"")
-  }
+function getTimeZoneString(time = new Date){
+  const offset = time.getTimezoneOffset()
+  return "GMT" + (offset<=0?"+":"-") + Math.floor(Math.abs(offset)/60) + (offset%60?":"+Math.abs(offset)%60:"")
+}
 
 function updateCountdown() {
   const now = new Date();
@@ -21,8 +21,8 @@ function updateCountdown() {
   document.getElementById('yourTz').textContent = getTimeZoneString(now);
   document.getElementById('yourClock').textContent = yourTime;
   document.getElementById('minutes').textContent = minutesUntilReset;
+
+  setTimeout(updateCountdown, 1000 - new Date().getMilliseconds());
 }
 
-// Update every second
-setInterval(updateCountdown, 1000);
 updateCountdown();
