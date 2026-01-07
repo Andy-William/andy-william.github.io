@@ -1,40 +1,26 @@
-function updateCountdown() {
-  // Get current time in GMT+7
-  const now = new Date();
-  const options = { timeZone: 'Asia/Jakarta', hour12: false };
+function nextReset(time = new Date){
+  return time - (time - 0 + 7200000) % 86400000 + 86400000;
+}
 
-  // Format current time for display
-  const timeString = now.toLocaleTimeString('en-GB', options);
-  document.getElementById('clock').textContent = timeString;
+function diffMins(from, to){
+  return Math.floor((to-from)/(1000*60))
+}
 
-  // Calculate Target: 5:00 AM in GMT+7
-  // We create a target date object based on the local time of the GMT+7 zone
-  const formatter = new Intl.DateTimeFormat('en-GB', {
-    timeZone: 'Asia/Jakarta',
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric'
-  });
-
-  const parts = formatter.formatToParts(now);
-  const dateMap = {};
-  parts.forEach(p => dateMap[p.type] = p.value);
-
-  let target = new Date(now);
-  target.setHours(5, 0, 0, 0);
-
-  // If it's already past 5 AM today, set target to 5 AM tomorrow
-  if (now >= target) {
-      target.setDate(target.getDate() + 1);
+  function getTimeZoneString(time = new Date){
+    const offset = time.getTimezoneOffset()
+    return "GMT" + (offset<=0?"+":"-") + Math.floor(Math.abs(offset)/60) + (offset%60?":"+Math.abs(offset)%60:"")
   }
 
-  const diffMs = target - now;
-  const diffMins = Math.floor(diffMs / (1000 * 60));
+function updateCountdown() {
+  const now = new Date();
+  const yourTime = now.toLocaleTimeString('en-GB')
+  const serverTime = now.toLocaleTimeString('en-GB', { timeZone: 'Asia/Jakarta' });
+  const minutesUntilReset = diffMins(now, nextReset(now))
 
-  document.getElementById('minutes').textContent = diffMins;
+  document.getElementById('serverClock').textContent = serverTime;
+  document.getElementById('yourTz').textContent = getTimeZoneString(now);
+  document.getElementById('yourClock').textContent = yourTime;
+  document.getElementById('minutes').textContent = minutesUntilReset;
 }
 
 // Update every second
