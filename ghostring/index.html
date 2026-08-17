@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+  <link href="style.css" rel="stylesheet">
+  <link rel="icon" type="image/x-icon" href="romdle.png">
+  <title>Ghostring Sweeper Solver</title>
+</head>
+<body>
+<div class="wrap">
+  <h1>👻 Ghostring Sweeper Solver</h1>
+  <div class="subtitle">A verified strategy that finds the Ghostring within 5 shots, every time.</div>
+
+  <div class="panel">
+    <div class="status" id="status">Loading…</div>
+    <div class="grid" id="grid"></div>
+    <div class="btnrow" id="btnrow"></div>
+    <div class="resetrow"><button class="b-reset" id="resetBtn">↺ Start Over</button></div>
+    <div class="history" id="history"></div>
+    <div class="stats">
+      <div><b>≤5</b>guaranteed max shots</div>
+      <div><b>3.64</b>average shots</div>
+      <div><b>25/25</b>coordinates solvable</div>
+    </div>
+  </div>
+
+  <details>
+    <summary>📋 Full decision tree (every possible path, all 25 outcomes)</summary>
+    <div id="fullTree" style="margin-top:12px;"></div>
+  </details>
+
+  <footer>Strategy computed by exhaustive minimax search over all 25 cells and every Hot/Warm/Cold/Win response combination.</footer>
+</div>
+
+<script src="ghostring.js" type="module"></script>
+</body>
+</html>
