@@ -9,27 +9,39 @@
 <body>
 <div class="wrap">
   <h1>👻 Ghostring Sweeper Solver</h1>
-  <div class="subtitle">A verified strategy that finds the Ghostring within 5 shots, every time.</div>
+  <div class="subtitle" id="subtitle"></div>
+
+  <div class="modetoggle">
+    <button class="mode-btn on" id="btnEasy">😌 Normal Mode</button>
+    <button class="mode-btn hard" id="btnHard">💀 Hard Mode</button>
+  </div>
 
   <div class="panel">
-    <div class="status" id="status">Loading…</div>
+    <div class="status" id="status"></div>
+    <div class="riskline" id="riskline"></div>
+    <div class="chiprow" id="chiprow"></div>
     <div class="grid" id="grid"></div>
-    <div class="btnrow" id="btnrow"></div>
-    <div class="resetrow"><button class="b-reset" id="resetBtn">↺ Start Over</button></div>
-    <div class="history" id="history"></div>
-    <div class="stats">
-      <div><b>≤5</b>guaranteed max shots</div>
-      <div><b>3.64</b>average shots</div>
-      <div><b>25/25</b>coordinates solvable</div>
+    <div class="legend">
+      <span class="swatch"></span> equally-optimal squares — tap any of them, or tap <em>any</em> grid square to choose your own
     </div>
+    <div class="costline" id="costline"></div>
+    <div class="btnrow" id="btnrow"></div>
+    <div class="resetrow"><button class="b-reset" id="btnReset">↺ Start Over</button></div>
+    <div class="history" id="history"></div>
+    <div class="odds" id="odds"></div>
+    <div class="stats" id="stats"></div>
+    <div class="note" id="note"></div>
   </div>
 
   <details>
-    <summary>📋 Full decision tree (every possible path, all 25 outcomes)</summary>
-    <div id="fullTree" style="margin-top:12px;"></div>
+    <summary>📋 Optimal continuation from the current position</summary>
+    <div id="fullTree" style="margin-top:10px;"></div>
   </details>
 
-  <footer>Strategy computed by exhaustive minimax search over all 25 cells and every Hot/Warm/Cold/Win response combination.</footer>
+  <footer>
+    Every recommendation is recomputed live by exhaustive search over all 25 squares and every
+    Hot/Warm/Cold/Win response — so you can deviate at any shot and still get optimal play afterwards.
+  </footer>
 </div>
 
 <script src="ghostring.js" type="module"></script>
