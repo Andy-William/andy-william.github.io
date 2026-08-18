@@ -32,7 +32,7 @@ h1{
   font-weight:700; font-size:14px; color:#fff; background:var(--tile);
   border:2px solid var(--tile-border); transition:all .2s;
 }
-.cell.header{background:transparent;border:none;color:var(--purple-dark);font-size:15px;}
+.cell.header{display:flex;background:transparent;border:none;color:var(--purple-dark);font-size:15px;align-items:center;height:100%;width:100%}
 .cell.current{background:var(--purple); border-color:var(--purple-dark); box-shadow:0 0 0 3px rgba(124,58,237,0.25);}
 .cell.hot{background:var(--hot);}
 .cell.warm{background:var(--warm);}
