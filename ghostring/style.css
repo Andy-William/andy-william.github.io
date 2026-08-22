@@ -11,7 +11,7 @@ body{
 body.hard{background:#f6ecec;}
 .wrap{max-width:660px;margin:0 auto;}
 h1{
-  text-align:center; font-size:27px; margin:0 0 4px;
+  text-align:center; font-size:27px; margin:0 0 4px; margin-bottom:16px;
   color:var(--purple-dark);
 }
 body.hard h1{color:var(--danger);}
