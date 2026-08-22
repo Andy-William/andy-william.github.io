@@ -111,7 +111,7 @@ function evaluate(mask,shot,hard){
 function bestSet(mask,shot,hard){
   const sc=evaluate(mask,shot,hard);
   let best = hard ? Math.max(...sc) : Math.min(...sc.filter(x=>x<Infinity));
-  const eq=[]; 
+  const eq=[];
   for(let g=0;g<25;g++) if(Math.abs(sc[g]-best)<1e-12) eq.push(g);
   return {best, eq, sc};
 }
@@ -286,10 +286,6 @@ function renderExtras(){
   document.getElementById('note').innerHTML = hard
     ? 'Per the guide, 1 Whisper is present from the start and doubles on every miss (1→2→4→8→16), so <b>even your first shot carries ~4% risk</b> and a 5th shot is near-suicide at 80%. Risk figures assume Whispers spawn uniformly at random on unguessed, non-Ghostring cells — the game does not publish that placement rule, so treat them as estimates. <b>No strategy can detect or dodge a Whisper</b>; hints only ever describe the Ghostring, so 75.85% is the ceiling, not a target to beat.'
     : 'Minimises shots and ignores Whispers. Four openings tie for best (B3, C2, C4, D3) — they are mirror images with identical odds. Switch to Hard Mode when Whispers are in play.';
-
-  document.getElementById('subtitle').innerHTML = hard
-    ? 'Hard Mode: maximises win probability against the multiplying Whispers.'
-    : 'Normal Mode: the provably fastest route to the Ghostring.';
 }
 
 function renderTree(){
